@@ -370,25 +370,40 @@ nav.on-white .hamburger span{background:var(--slate)}
 
 
 /* Sticky nav — homepage */
+/* Sticky nav with topbar coordination */
+#admissions-bar{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:201;
+  height:44px;
+  transition:height .35s ease, padding .35s ease, opacity .25s ease;
+}
+#admissions-bar.hidden{
+  height:0;
+  padding-top:0;
+  padding-bottom:0;
+  opacity:0;
+  pointer-events:none;
+}
 nav.hero-nav{
   position:fixed !important;
-  top:0;left:0;right:0;
+  top:44px;left:0;right:0;
   background:rgba(10,36,11,0.0);
-  transition:background .3s, box-shadow .3s;
+  transition:background .3s, box-shadow .3s, top .35s ease;
   box-shadow:none;
+  z-index:200;
 }
 nav.hero-nav.scrolled{
+  top:0 !important;
   background:rgba(10,36,11,0.97) !important;
   box-shadow:0 2px 20px rgba(0,0,0,.2);
 }
-/* Offset for topbar */
-nav.hero-nav{top:44px}
-.hero{padding-top:80px}
+.hero{padding-top:124px}
 
 </style>
 </head>
 <body>
-<div style="background:var(--or);color:rgba(255,255,255,.95);font-size:13.5px;padding:10px 6%;text-align:center;font-weight:500">
+<div id="admissions-bar" style="background:var(--or);color:rgba(255,255,255,.95);font-size:13.5px;padding:10px 6%;text-align:center;font-weight:500;transition:height .3s,padding .3s,opacity .3s;overflow:hidden">
   🎒 Nursery admissions for 2026–2027 open on <strong>Saturday, 19th September 2026</strong> at 9:00 am — <a href="admissions.html" style="color:#FFE68A;font-weight:700;text-decoration:underline">Find out more</a>
 </div>
 
@@ -842,7 +857,10 @@ nav.hero-nav{top:44px}
 <script>
 window.addEventListener('scroll', function(){
   var nav = document.getElementById('main-nav');
-  if(nav){ nav.classList.toggle('scrolled', window.scrollY > 60); }
+  var bar = document.getElementById('admissions-bar');
+  var scrolled = window.scrollY > 60;
+  if(nav){ nav.classList.toggle('scrolled', scrolled); }
+  if(bar){ bar.classList.toggle('hidden', scrolled); }
 });
 </script>
 </body>
